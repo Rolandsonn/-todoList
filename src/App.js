@@ -1,10 +1,16 @@
 import { useState, useEffect } from "react";
 import "./App.css";
+import Button from "./components/Button/Button";
+import Input from "./components/Input";
 import Modal from "./components/Modal";
 import TaskList from "./components/TaskList";
+
+import shortid from "shortid";
+
 function App() {
   const [show, setShow] = useState(false);
   const [newtask, setNewTask] = useState("");
+  const [filter, setFilter] = useState("");
   const [tasks, setTasks] = useState([
     {
       id: 1,
@@ -17,12 +23,12 @@ function App() {
       completed: false,
     },
     {
-      id: 1,
+      id: 3,
       title: "sleep",
       completed: false,
     },
     {
-      id: 1,
+      id: 4,
       title: "Coding",
       completed: false,
     },
@@ -49,21 +55,53 @@ function App() {
     console.log("Hello World!!!");
   }, []);
 
-  const showModal = () => {
-    setShow(true);
+  const showModal = () => setShow(!show);
+
+  const changeFilter = (e) => {
+    setFilter(e.target.value);
+  };
+
+  const FILTERED = filter.toLowerCase();
+
+  const filteredTasks = tasks.filter(({ title }) =>
+    title.toLowerCase().includes(FILTERED)
+  );
+
+  const addNewText = (event) => {
+    setNewTask(event.target.value);
+  };
+
+  const addTasks = () => {
+    const newTask = {
+      id: shortid.generate(),
+      title: newtask,
+      completed: false,
+    };
+
+    setTasks((prevState) => [...prevState, newTask]);
   };
 
   return (
     <>
-      <div>
-        {show && <Modal />}
-        <button onClick={showModal}>Open Modal</button>
+      <div className="App">
+        {show && (
+          <Modal
+            addTasks={addTasks}
+            addFunction={addNewText}
+            showModal={showModal}
+          />
+        )}
+        <div className="btnOpen">
+          <Button handleClick={showModal}>Открыть модалку</Button>
+        </div>
+
+        <Input placeholder="Filter" handleChange={changeFilter} />
 
         <TaskList
           handleDelete={handleDelete}
           handleDone={handleDone}
           handleEdit={handleEdit}
-          list={tasks}
+          list={filteredTasks}
         />
       </div>
     </>

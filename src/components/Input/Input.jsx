@@ -1,20 +1,9 @@
 import React, { useState } from "react";
 
-const Input = () => {
-  const [name, setName] = useState("");
-
-  const handleChange = (event) => {
-    setName(event.target.values);
-  };
-
+const Input = ({ name, textInput, placeholder, handleChange }) => {
   return (
     <>
-      <input
-        type="text"
-        value={name}
-        onChange={handleChange}
-        placeholder="Name"
-      />
+      <input type={name} onChange={handleChange} placeholder={placeholder} />
     </>
   );
 };

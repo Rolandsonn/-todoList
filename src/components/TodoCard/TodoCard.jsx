@@ -3,7 +3,9 @@ import styles from "./TodoCard.module.css";
 const TodoCard = ({ title }) => {
   return (
     <>
-      <p>{title}</p>
+      <li className={styles.card}>
+        <p>{title}</p>
+      </li>
     </>
   );
 };
