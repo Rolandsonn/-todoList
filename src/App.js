@@ -33,27 +33,38 @@ function App() {
       completed: false,
     },
   ]);
+  const [isExists, setIsExists] = useState(false);
 
+  //* Func delete Task
   const handleDelete = (id) => {
     const deleted = tasks.filter((item) => item.id !== id);
 
     setTasks([...deleted]);
   };
 
+  //* Func edit Task
   const handleEdit = (editedTodo) => {
-    tasks.map((item) => {
+    const editedList = tasks.map((item) => {
       if (item.id === editedTodo.id) {
         return editedTodo;
       }
       return item;
     });
+
+    setTasks(editedList);
   };
 
-  const handleDone = () => {};
-
-  useEffect(() => {
-    console.log("Hello World!!!");
-  }, []);
+  //* Func done Task
+  const handleDone = (id) => {
+    // const currentIndex = tasks.findIndex((task) => task.id === id);
+    tasks.map((task) => {
+      if (task.id === id) {
+        return (task.completed = !task.completed);
+      }
+      return task;
+    });
+    setTasks([...tasks]);
+  };
 
   const showModal = () => setShow(!show);
 
@@ -67,40 +78,62 @@ function App() {
     title.toLowerCase().includes(FILTERED)
   );
 
-  const addNewText = (event) => {
+  const handleChangeCheck = (event) => {
     setNewTask(event.target.value);
   };
 
-  const addTasks = () => {
+  const handleAddTask = () => {
+    tasks.forEach((task) => {
+      if (task.title === newtask) {
+        alert(`This task ${newtask} has already been added`);
+        setIsExists(!isExists);
+      }
+    });
+
     const newTask = {
       id: shortid.generate(),
       title: newtask,
       completed: false,
     };
 
-    setTasks((prevState) => [...prevState, newTask]);
+    console.log(newTask);
+
+    !isExists && setTasks((prevState) => [...prevState, newTask]);
+    showModal();
   };
+
+  useEffect(() => {
+    const myLocalList = JSON.parse(localStorage.getItem("tasks"));
+    if (myLocalList.length !== 0) {
+      setTasks(myLocalList);
+    }
+    setTasks(myLocalList);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
   return (
     <>
       <div className="App">
         {show && (
           <Modal
-            addTasks={addTasks}
-            addFunction={addNewText}
+            handleChangeCheck={handleChangeCheck}
+            handleAdd={handleAddTask}
             showModal={showModal}
           />
         )}
         <div className="btnOpen">
-          <Button handleClick={showModal}>Открыть модалку</Button>
+          <Button handleClick={showModal}>Open Modal</Button>
         </div>
 
         <Input placeholder="Filter" handleChange={changeFilter} />
 
         <TaskList
           handleDelete={handleDelete}
-          handleDone={handleDone}
           handleEdit={handleEdit}
+          handleDone={handleDone}
           list={filteredTasks}
         />
       </div>

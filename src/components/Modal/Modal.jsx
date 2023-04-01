@@ -2,29 +2,24 @@ import React, { useState } from "react";
 import Button from "../Button/Button";
 import Input from "../Input";
 import styles from "./Modal.module.css";
-const Modal = ({ handleClickAdd, showModal, addFunction, addTasks }) => {
-  const [text, setText] = useState("");
-
-  const handleChangetext = (textInput) => {
-    setText(textInput);
-  };
-
+const Modal = ({ handleClickAdd, showModal, handleAdd, handleChangeCheck }) => {
   return (
-    <div className={styles.modalWrapper}>
+    <>
+      <div className={styles.modalWrapper}></div>
       <div className={styles.modalContent}>
         <Input
-          handleChange={addFunction}
+          handleChange={handleChangeCheck}
           name="add"
-          placeholder="Добавить таск"
+          placeholder="Add task... "
         />
 
         <div className={styles.btnClose}>
           <Button handleClick={showModal}>X</Button>
         </div>
 
-        <Button handleClick={addTasks}>Добавить таск</Button>
+        <Button handleClick={handleAdd}>Add task</Button>
       </div>
-    </div>
+    </>
   );
 };
 
