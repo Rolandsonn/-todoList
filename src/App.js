@@ -106,7 +106,7 @@ function App() {
   useEffect(() => {
     const myLocalList = JSON.parse(localStorage.getItem("tasks"));
 
-    myLocalList.length > 0 && setTasks(myLocalList);
+    setTasks(myLocalList);
   }, []);
 
   useEffect(() => {
