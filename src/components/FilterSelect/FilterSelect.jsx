@@ -1,15 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import Select from "react-select";
-const FilterSelect = ({ data }) => {
-  const handleChange = (selectedOption) => {
-    console.log(selectedOption);
+const FilterSelect = ({ data, onSelected }) => {
+  const handleChange = (e) => {
+    onSelected(e.target.value);
   };
-
-  const dataelem = data.map((item) => <div key={item.id}>{item.title}</div>);
 
   return (
     <>
-      <Select options={dataelem} onChange={handleChange} />
+      <select multiple={true} defaultValue={data} onChange={handleChange}>
+        {data.map((item) => (
+          <option key={item.id} value={item}>
+            {item.title}
+          </option>
+        ))}
+      </select>
     </>
   );
 };

@@ -4,7 +4,6 @@ import Button from "./components/Button/Button";
 import Input from "./components/Input";
 import Modal from "./components/Modal";
 import TaskList from "./components/TaskList";
-import FilterSelect from "./components/FilterSelect";
 
 import shortid from "shortid";
 
@@ -106,7 +105,7 @@ function App() {
 
   useEffect(() => {
     const myLocalList = JSON.parse(localStorage.getItem("tasks"));
-    if (myLocalList.length !== 0) {
+    if (myLocalList.length > 0) {
       setTasks(myLocalList);
     }
   }, []);
@@ -137,6 +136,7 @@ function App() {
             Open Modal
           </Button>
         </div>
+
         {tasks.length > 0 && (
           <Input placeholder="Filter" handleChange={changeFilter} />
         )}
