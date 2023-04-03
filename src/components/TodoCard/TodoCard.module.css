@@ -1,9 +1,20 @@
 .card {
   display: flex;
-  flex-wrap: wrap;
+  justify-content: space-around;
   align-items: center;
-  padding-left: 40px;
-  border: 1px solid gray;
+  border: 2px solid gray;
+  border-radius: 3px;
+  font-size: 20px;
   min-width: 400px;
-  height: 50px;
+  height: 60px;
+}
+.text {
+  text-decoration: line-through;
+}
+.checkbox {
+  background-color: green;
+}
+.input {
+  height: 25px;
+  outline: none;
 }

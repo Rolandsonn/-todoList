@@ -52,6 +52,7 @@ function App() {
     });
 
     setTasks(editedList);
+    console.log("click edit");
   };
 
   //* Func done Task
@@ -114,6 +115,13 @@ function App() {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
 
+  //! Func Delete All Tasks
+
+  const handleDeleteAllTasks = () => {
+    setTasks([]);
+    localStorage.clear();
+  };
+
   return (
     <>
       <div className="App">
@@ -125,10 +133,22 @@ function App() {
           />
         )}
         <div className="btnOpen">
-          <Button handleClick={showModal}>Open Modal</Button>
+          <Button type={"open"} handleClick={showModal}>
+            Open Modal
+          </Button>
         </div>
 
-        <Input placeholder="Filter" handleChange={changeFilter} />
+        {tasks.length > 0 && (
+          <Input placeholder="Filter" handleChange={changeFilter} />
+        )}
+
+        {tasks.length !== 0 ? (
+          <Button type={"deleteAll"} handleClick={handleDeleteAllTasks}>
+            Clear
+          </Button>
+        ) : (
+          ""
+        )}
 
         <TaskList
           handleDelete={handleDelete}

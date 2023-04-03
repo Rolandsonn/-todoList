@@ -14,10 +14,14 @@ const Modal = ({ handleClickAdd, showModal, handleAdd, handleChangeCheck }) => {
         />
 
         <div className={styles.btnClose}>
-          <Button handleClick={showModal}>X</Button>
+          <Button type={"closeBtn"} handleClick={showModal}>
+            X
+          </Button>
         </div>
 
-        <Button handleClick={handleAdd}>Add task</Button>
+        <Button type={"addBtn"} handleClick={handleAdd}>
+          Add task
+        </Button>
       </div>
     </>
   );

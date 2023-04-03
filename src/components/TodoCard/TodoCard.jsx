@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styles from "./TodoCard.module.css";
+import Button from "../Button/Button";
 const TodoCard = ({
   title,
   handleDelete,
@@ -23,16 +24,23 @@ const TodoCard = ({
 
   if (iEdit) {
     return (
-      <div>
+      <div className={styles.card}>
         <input
+          className={styles.input}
           type="text"
           name="edit"
           value={newTitle}
           onChange={(e) => setNewTitle(e.target.value)}
         />
 
-        <button onClick={editHandler}>save</button>
-        <button onClick={() => handleSelectCurrent(null)}>cancel</button>
+        <Button type={"save"} handleClick={editHandler}>
+          save
+        </Button>
+        <Button type={"cancel"} handleClick={handleSelectCurrent}>
+          cancel
+        </Button>
+        {/* <button onClick={editHandler}>save</button> */}
+        {/* <button onClick={() => handleSelectCurrent(null)}>cancel</button> */}
       </div>
     );
   }
@@ -40,10 +48,18 @@ const TodoCard = ({
   return (
     <>
       <li className={styles.card}>
-        <p>{title}</p>
-        <button onClick={() => handleDelete(id)}>Delete</button>
-        <button onClick={() => handleSelectCurrent(id)}>Edit</button>
-        <button onClick={() => handleDone(id)}>Done</button>
+        <input
+          className={styles.checkbox}
+          type="checkbox"
+          onClick={() => handleDone(id)}
+        />
+        <p className={completed ? styles.text : ""}>{title}</p>
+        <Button type={"edit"} handleClick={() => handleSelectCurrent(id)}>
+          Edit
+        </Button>
+        <Button type={"delete"} handleClick={() => handleDelete(id)}>
+          Delete
+        </Button>
       </li>
     </>
   );

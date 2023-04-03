@@ -1,8 +1,8 @@
 import React from "react";
 import styles from "./Button.module.css";
-const Button = ({ children, handleClick }) => {
+const Button = ({ children, handleClick, type }) => {
   return (
-    <button className={styles.button} onClick={handleClick}>
+    <button className={styles[type]} onClick={handleClick}>
       {children}
     </button>
   );
