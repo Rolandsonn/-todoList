@@ -35,6 +35,16 @@ function App() {
   ]);
   const [isExists, setIsExists] = useState(false);
 
+  useEffect(() => {
+    const data = JSON.parse(localStorage.getItem("tasks"));
+
+    setTasks(data);
+  }, []);
+
+  useEffect(() => {
+    tasks.length && localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
+
   //* Func delete Task
   const handleDelete = (id) => {
     const deleted = tasks.filter((item) => item.id !== id);
@@ -102,16 +112,6 @@ function App() {
     !isExists && setTasks((prevState) => [...prevState, newTask]);
     showModal();
   };
-
-  useEffect(() => {
-    const myLocalList = JSON.parse(localStorage.getItem("tasks"));
-
-    setTasks(myLocalList);
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-  }, [tasks]);
 
   //! Func Delete All Tasks
 
